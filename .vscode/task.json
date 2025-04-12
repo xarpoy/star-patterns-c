@@ -4,18 +4,27 @@
       {
         "label": "Build C - main.c",
         "type": "shell",
-        "command": "gcc",
+        "command": "C:/msys64/mingw64/bin/gcc.exe",
         "args": [
           "src/main.c",
           "-o",
-          "bin/main"
+          "bin/main.exe",
+          "-g"
         ],
         "group": {
           "kind": "build",
           "isDefault": true
         },
         "problemMatcher": ["$gcc"],
-        "detail": "Compile C program to bin/main"
+        "detail": "Compile dengan MSYS2 gcc"
+      },
+      {
+        "label": "Run C Program",
+        "type": "shell",
+        "command": ".\\bin\\main.exe",
+        "dependsOn": "Build C - main.c",
+        "group": "test",
+        "problemMatcher": []
       }
     ]
   }
