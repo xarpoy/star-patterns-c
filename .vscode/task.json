@@ -15,16 +15,7 @@
           "kind": "build",
           "isDefault": true
         },
-        "problemMatcher": ["$gcc"],
-        "detail": "Compile dengan MSYS2 gcc"
-      },
-      {
-        "label": "Run C Program",
-        "type": "shell",
-        "command": ".\\bin\\main.exe",
-        "dependsOn": "Build C - main.c",
-        "group": "test",
-        "problemMatcher": []
+        "problemMatcher": ["$gcc"]
       }
     ]
   }
