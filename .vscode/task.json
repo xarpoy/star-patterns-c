@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build C - main.c",
+        "type": "shell",
+        "command": "gcc",
+        "args": [
+          "src/main.c",
+          "-o",
+          "bin/main"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": ["$gcc"],
+        "detail": "Compile C program to bin/main"
+      }
+    ]
+  }
+  
