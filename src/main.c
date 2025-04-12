@@ -1,229 +1,79 @@
-// Star Pattern
 #include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include "../include/patterns.h"
 
-// Tipe Data
-typedef enum{
-    SEGITIGA_SIKU_SIKU,
-    SEGITIGA_SIKU_SIKU_TERBALIK,
-    SEGITIGA_SIKU_SIKU_KANAN,
-    SEGITIGA_SAMA_KAKI,
-    SEGITIGA_SAMA_KAKI_TERBALIK,
-    BELAH_KETUPAT_DIAMOND,
-    PERSEGI_PERSEGI_PANJANG,
-    X_PATTERN,
-    HOLLOW_PYRAMID,
-    KOTAK_BINGKAI
-}State;
+#ifdef _WIN32
+    #include <windows.h>
+#else
+    #include <unistd.h>
+#endif
 
-int main()
-{
-    // Variabel
-    #pragma region Variabel
-    State state;
-    int i, j, n, opsi;
-    #pragma endregion
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls");
+    #else
+        system("clear");
+    #endif
+}
 
-    // Opsi
-    #pragma region Opsi
-    printf("+++===PROGRAM LOOPING BINTANG===+++\n");
-    printf("-----------------------------------\n\n");
-    printf("1. Segitiga Siku-Siku\n");
-    printf("   *\n");
-    printf("   * *\n");
-    printf("   * * *\n");
-    printf("   * * * *\n\n");
-    printf("2. Segitiga Siku-Siku Terbalik\n");
-    printf("   * * * *\n");
-    printf("   * * *\n");
-    printf("   * *\n");
-    printf("   *\n\n");
-    printf("3. Segitiga Siku-Siku Kanan\n");
-    printf("         *\n");
-    printf("       * *\n");
-    printf("     * * *\n");
-    printf("   * * * *\n\n");
-    printf("4. Segitiga Sama Kaki\n");
-    printf("         *       \n");
-    printf("       * * *     \n");
-    printf("     * * * * *   \n");
-    printf("   * * * * * * * \n\n");
-    printf("5. Segitiga Sama Kaki Terbalik\n");
-    printf("   * * * * * * * \n");
-    printf("     * * * * *   \n");
-    printf("       * * *     \n");
-    printf("         *       \n\n");
-    printf("6. Belah Ketupat/Diamond\n");
-    printf("         *       \n");
-    printf("       * * *     \n");
-    printf("     * * * * *   \n");
-    printf("       * * *     \n");
-    printf("         *       \n\n");
-    printf("7. Persegi/Persegi Panjang\n");
-    printf("   * * *\n");
-    printf("   * * *\n");
-    printf("   * * *\n\n");
-    printf("8. X Pattern\n");
-    printf("   *   *\n");
-    printf("     *  \n");
-    printf("   *   *\n\n");
-    printf("9. Hollow Pyramid\n");
-    printf("       *     \n");
-    printf("     *   *   \n");
-    printf("   *       * \n\n");
-    printf("10. Kotak Bingkai\n");
-    printf("   * * *\n");
-    printf("   *   *\n");
-    printf("   *   *\n");
-    printf("   * * *\n\n");
-    printf("Opsi: ");
-    scanf("%d", &opsi);
-    #pragma endregion
+void delay(int seconds) {
+    #ifdef _WIN32
+        Sleep(seconds * 1000);
+    #else
+        sleep(seconds);
+    #endif
+}
 
-    // Logic Opsi
-    #pragma region Logic Opsi
-    if (opsi >= 1 && opsi <= 10) {
-        state = (State)(opsi - 1);
-    } else {
-        printf("Opsi tidak valid!\n");
-        return 1;
+int main() {
+    int opsi, n, tinggi, lebar;
+    char ulang;
+
+    do {
+        clearScreen();
+        printf("=== PROGRAM POLA BINTANG ===\n");
+        printf("1. Segitiga Siku-Siku\n2. Segitiga Siku-Siku Terbalik\n3. Segitiga Siku-Siku Kanan\n");
+        printf("4. Segitiga Sama Kaki\n5. Segitiga Sama Kaki Terbalik\n6. Belah Ketupat\n");
+        printf("7. Persegi / Persegi Panjang\n8. X Pattern\n9. Hollow Pyramid\n10. Kotak Bingkai\n11. Keluar\n");
+        printf("Pilih opsi (1-11): ");
+        scanf("%d", &opsi);
+
+        if (opsi == 11) break;
+
+        State state = (State)(opsi - 1);
+
+        if (opsi == 7) {
+            printf("Masukkan tinggi: "); scanf("%d", &tinggi);
+            printf("Masukkan lebar: "); scanf("%d", &lebar);
+        } else {
+            printf("Masukkan jumlah baris (n): "); scanf("%d", &n);
+            if (n <= 0) {
+                printf("Nilai harus lebih dari 0!\n");
+                return 1;
+            }
+        }
+
+        switch (state) {
+            case SEGITIGA_SIKU_SIKU: segitigaSikuSiku(n); break;
+            case SEGITIGA_SIKU_SIKU_TERBALIK: segitigaSikuSikuTerbalik(n); break;
+            case SEGITIGA_SIKU_SIKU_KANAN: segitigaSikuSikuKanan(n); break;
+            case SEGITIGA_SAMA_KAKI: segitigaSamaKaki(n); break;
+            case SEGITIGA_SAMA_KAKI_TERBALIK: segitigaSamaKakiTerbalik(n); break;
+            case BELAH_KETUPAT_DIAMOND: belahKetupat(n); break;
+            case PERSEGI_PERSEGI_PANJANG: persegi(tinggi, lebar); break;
+            case X_PATTERN: xPattern(n); break;
+            case HOLLOW_PYRAMID: hollowPyramid(n); break;
+            case KOTAK_BINGKAI: kotakBingkai(n); break;
+            default: printf("Opsi tidak valid!\n"); break;
+        }
+
+        printf("\nKembali ke menu? (y/n): ");
+        scanf(" %c", &ulang);
+    } while (tolower(ulang) == 'y');
+
+    printf("Terima kasih telah menggunakan program!\nTunggu 3 detik...\n");
+    for (int i = 1; i <= 3; i++) {
+        printf("%d ", i); fflush(stdout); delay(1);
     }
-    #pragma endregion
-
-    // State Opsi
-    #pragma region State Opsi
-    printf("Masukkan jumlah baris (n): ");
-    scanf("%d", &n);
-    printf("\n");
-
-    switch (state)
-    {
-    case SEGITIGA_SIKU_SIKU:
-        for(i = 1; i <= n; i++) {
-            for(j = 1; j <= i; j++) {
-                printf("* ");
-            }
-            printf("\n");
-        }
-        break;
-
-    case SEGITIGA_SIKU_SIKU_TERBALIK:
-        for(i = n; i >= 1; i--) {
-            for(j = 1; j <= i; j++) {
-                printf("* ");
-            }
-            printf("\n");
-        }
-        break;
-
-    case SEGITIGA_SIKU_SIKU_KANAN:
-        for(i = 1; i <= n; i++) {
-            for(j = 1; j <= n - i; j++) {
-                printf("  ");
-            }
-            for(j = 1; j <= i; j++) {
-                printf("* ");
-            }
-            printf("\n");
-        }
-        break;
-
-    case SEGITIGA_SAMA_KAKI:
-        for(i = 1; i <= n; i++) {
-            for(j = 1; j <= n - i; j++) {
-                printf("  ");
-            }
-            for(j = 1; j <= 2 * i - 1; j++) {
-                printf("* ");
-            }
-            printf("\n");
-        }
-        break;
-
-    case SEGITIGA_SAMA_KAKI_TERBALIK:
-        for(i = n; i >= 1; i--) {
-            for(j = 1; j <= n - i; j++) {
-                printf("  ");
-            }
-            for(j = 1; j <= 2 * i - 1; j++) {
-                printf("* ");
-            }
-            printf("\n");
-        }
-        break;
-
-    case BELAH_KETUPAT_DIAMOND:
-        for(i = 1; i <= n; i++) {
-            for(j = 1; j <= n - i; j++) {
-                printf("  ");
-            }
-            for(j = 1; j <= 2 * i - 1; j++) {
-                printf("* ");
-            }
-            printf("\n");
-        }
-        for(i = n - 1; i >= 1; i--) {
-            for(j = 1; j <= n - i; j++) {
-                printf("  ");
-            }
-            for(j = 1; j <= 2 * i - 1; j++) {
-                printf("* ");
-            }
-            printf("\n");
-        }
-        break;
-
-    case PERSEGI_PERSEGI_PANJANG:
-        for(i = 1; i <= n; i++) {
-            for(j = 1; j <= n; j++) {
-                printf("* ");
-            }
-            printf("\n");
-        }
-        break;
-
-    case X_PATTERN:
-        for(i = 1; i <= n; i++) {
-            for(j = 1; j <= n; j++) {
-                if(j == i || j == n - i + 1)
-                    printf("* ");
-                else
-                    printf("  ");
-            }
-            printf("\n");
-        }
-        break;
-
-    case HOLLOW_PYRAMID:
-        for(i = 1; i <= n; i++) {
-            for(j = 1; j <= n - i; j++) {
-                printf("  ");
-            }
-            for(j = 1; j <= 2 * i - 1; j++) {
-                if(j == 1 || j == 2 * i - 1 || i == n)
-                    printf("* ");
-                else
-                    printf("  ");
-            }
-            printf("\n");
-        }
-        break;
-
-    case KOTAK_BINGKAI:
-        for(i = 1; i <= n; i++) {
-            for(j = 1; j <= n; j++) {
-                if(i == 1 || i == n || j == 1 || j == n)
-                    printf("* ");
-                else
-                    printf("  ");
-            }
-            printf("\n");
-        }
-        break;
-
-    default:
-        printf("Opsi tidak dikenali.\n");
-        break;
-    }
-
     return 0;
 }
