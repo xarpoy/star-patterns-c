@@ -81,26 +81,11 @@ int main()
 
     // Logic Opsi
     #pragma region Logic Opsi
-    if (opsi == 1){
-        state = SEGITIGA_SIKU_SIKU;
-    } else if (opsi == 2){
-        state = SEGITIGA_SIKU_SIKU_TERBALIK;
-    } else if (opsi == 3){
-        state = SEGITIGA_SIKU_SIKU_KANAN;
-    } else if (opsi == 4){
-        state = SEGITIGA_SAMA_KAKI;
-    } else if (opsi == 5){
-        state = SEGITIGA_SAMA_KAKI_TERBALIK;
-    } else if (opsi == 6){
-        state = BELAH_KETUPAT_DIAMOND;
-    } else if (opsi == 7){
-        state = PERSEGI_PERSEGI_PANJANG;
-    } else if (opsi == 8){
-        state = X_PATTERN;
-    } else if (opsi == 9){
-        state = HOLLOW_PYRAMID;
-    } else if (opsi == 10){
-        state = KOTAK_BINGKAI;
+    if (opsi >= 1 && opsi <= 10) {
+        state = (State)(opsi - 1);
+    } else {
+        printf("Opsi tidak valid!\n");
+        return 1;
     }
     #pragma endregion
 
