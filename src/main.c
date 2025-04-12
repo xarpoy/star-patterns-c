@@ -91,42 +91,139 @@ int main()
 
     // State Opsi
     #pragma region State Opsi
+    printf("Masukkan jumlah baris (n): ");
+    scanf("%d", &n);
+    printf("\n");
+
     switch (state)
     {
     case SEGITIGA_SIKU_SIKU:
-        /* code */
+        for(i = 1; i <= n; i++) {
+            for(j = 1; j <= i; j++) {
+                printf("* ");
+            }
+            printf("\n");
+        }
         break;
+
     case SEGITIGA_SIKU_SIKU_TERBALIK:
-        /* code */
+        for(i = n; i >= 1; i--) {
+            for(j = 1; j <= i; j++) {
+                printf("* ");
+            }
+            printf("\n");
+        }
         break;
+
     case SEGITIGA_SIKU_SIKU_KANAN:
-        /* code */
+        for(i = 1; i <= n; i++) {
+            for(j = 1; j <= n - i; j++) {
+                printf("  ");
+            }
+            for(j = 1; j <= i; j++) {
+                printf("* ");
+            }
+            printf("\n");
+        }
         break;
+
     case SEGITIGA_SAMA_KAKI:
-        /* code */
+        for(i = 1; i <= n; i++) {
+            for(j = 1; j <= n - i; j++) {
+                printf("  ");
+            }
+            for(j = 1; j <= 2 * i - 1; j++) {
+                printf("* ");
+            }
+            printf("\n");
+        }
         break;
+
     case SEGITIGA_SAMA_KAKI_TERBALIK:
-        /* code */
+        for(i = n; i >= 1; i--) {
+            for(j = 1; j <= n - i; j++) {
+                printf("  ");
+            }
+            for(j = 1; j <= 2 * i - 1; j++) {
+                printf("* ");
+            }
+            printf("\n");
+        }
         break;
+
     case BELAH_KETUPAT_DIAMOND:
-        /* code */
+        for(i = 1; i <= n; i++) {
+            for(j = 1; j <= n - i; j++) {
+                printf("  ");
+            }
+            for(j = 1; j <= 2 * i - 1; j++) {
+                printf("* ");
+            }
+            printf("\n");
+        }
+        for(i = n - 1; i >= 1; i--) {
+            for(j = 1; j <= n - i; j++) {
+                printf("  ");
+            }
+            for(j = 1; j <= 2 * i - 1; j++) {
+                printf("* ");
+            }
+            printf("\n");
+        }
         break;
+
     case PERSEGI_PERSEGI_PANJANG:
-        /* code */
+        for(i = 1; i <= n; i++) {
+            for(j = 1; j <= n; j++) {
+                printf("* ");
+            }
+            printf("\n");
+        }
         break;
+
     case X_PATTERN:
-        /* code */
+        for(i = 1; i <= n; i++) {
+            for(j = 1; j <= n; j++) {
+                if(j == i || j == n - i + 1)
+                    printf("* ");
+                else
+                    printf("  ");
+            }
+            printf("\n");
+        }
         break;
+
     case HOLLOW_PYRAMID:
-        /* code */
+        for(i = 1; i <= n; i++) {
+            for(j = 1; j <= n - i; j++) {
+                printf("  ");
+            }
+            for(j = 1; j <= 2 * i - 1; j++) {
+                if(j == 1 || j == 2 * i - 1 || i == n)
+                    printf("* ");
+                else
+                    printf("  ");
+            }
+            printf("\n");
+        }
         break;
+
     case KOTAK_BINGKAI:
-        /* code */
+        for(i = 1; i <= n; i++) {
+            for(j = 1; j <= n; j++) {
+                if(i == 1 || i == n || j == 1 || j == n)
+                    printf("* ");
+                else
+                    printf("  ");
+            }
+            printf("\n");
+        }
         break;
+
     default:
+        printf("Opsi tidak dikenali.\n");
         break;
     }
-    #pragma endregion
 
     return 0;
 }
